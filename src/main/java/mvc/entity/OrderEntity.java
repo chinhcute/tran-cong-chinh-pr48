@@ -4,32 +4,27 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-@Table
-public class Order {
+@Table(name ="orders" )
+public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private Long orderld;
+
+    private int orderId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate orderDate;
     private String customerName;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<OrderDetails> orderDetails;
 
-    public int getId() {
-        return id;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Long getOrderld() {
-        return orderld;
-    }
-
-    public void setOrderld(Long orderld) {
-        this.orderld = orderld;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public LocalDate getOrderDate() {
@@ -46,6 +41,14 @@ public class Order {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public List<OrderDetails> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetails> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 }
 
